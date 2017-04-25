@@ -1,9 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
-from django import forms
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, ButtonHolder, Submit
 
 class RegistrationForm(UserCreationForm):
 
@@ -11,30 +9,25 @@ class RegistrationForm(UserCreationForm):
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
-        self.helper.layout = Layout('first_name',
-                                    'last_name',
-                                    'email',
-                                    'username',
-                                    'password1',
-                                    'password2',
-                                    )
-        self.helper.add_input(Submit('signup', 'Sign up'))
+        self.helper.field_class = 'col-xs-8'
+        self.helper.label_class = 'col-xs-4'
+        self.helper.layout = Layout(
+            'username',
+            'password1',
+            'password2',
+            ButtonHolder(
+                Submit('register', 'Register', css_class='btn-primary'))
 
+        )
 
 class LoginForm(AuthenticationForm):
-
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
-        self.helper.label_class = 'col-lg-4'
-        self.helper.field_class = 'col-lg-8'
         self.helper.layout = Layout(
             'username',
             'password',
+            ButtonHolder(
+                Submit('login', 'Login', css_class='btn-primary'))
         )
-        self.helper.add_input(Submit('login', 'Log in'))
